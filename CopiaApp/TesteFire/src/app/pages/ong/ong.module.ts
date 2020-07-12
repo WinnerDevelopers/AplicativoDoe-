@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { OngPageRoutingModule } from './ong-routing.module';
 
 import { OngPage } from './ong.page';
+import { DepositModalComponent } from '../deposit-modal/deposit-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { OngPage } from './ong.page';
     IonicModule,
     OngPageRoutingModule
   ],
-  declarations: [OngPage]
+  declarations: [OngPage, DepositModalComponent],
+  entryComponents: [DepositModalComponent]
 })
 export class OngPageModule {}

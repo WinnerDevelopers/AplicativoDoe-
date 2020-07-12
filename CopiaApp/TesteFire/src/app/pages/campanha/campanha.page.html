@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div class="topo">
+      <!-- <ion-title style="float: right;color: #2e4094;margin-right: 5%;"(click)="BackHome()">SALVAR</ion-title> -->
+    <ion-title style="margin-left: 8%;">{{nomeCampanha}}</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- <div class="iconeong">
+    <img src="{{fotoOng}}" style="width: 100%;;position: absolute;">
+  </div> -->
+  <div class="fundo">
+    <div class="iconecampanha">
+      <img id="iconeuser" src="{{fotoCampanha}}">
+    </div>
+    <div class="conteudo">
+
+      <div class="dados">
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                  <div>
+                  <p style="color: #0984e3;font-size: 25px;">{{nomeCampanha}}</p>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-bottom: 20px;">
+                <ion-col>
+                  <div style="text-align: left;font-size: 13px;color: #74b9ff;">
+                  <p>{{descricaoCampanha}}</p>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-bottom: 20px;">
+                <ion-col>
+                  <div style="color: #0984e3;font-size: 17px;">
+                  <p>Data Inicio</p>
+                  </div>
+                  <ion-row>
+                    <p style="text-align: left;color: #74b9ff;font-size: 14px;">{{inicioCampanha}}</p>
+                  </ion-row> 
+                </ion-col>
+                <ion-col style="left: 5%;">
+                    <p style="color: #0984e3;font-size: 17px;">Data Fim</p>
+                    <p style="text-align: left;color: #74b9ff;font-size: 14px;">{{fimCampanha}}</p>
+                </ion-col>
+              </ion-row>
+        </ion-grid>
+      </div>
+
+      </div>
+  </div>
+
+</ion-content>

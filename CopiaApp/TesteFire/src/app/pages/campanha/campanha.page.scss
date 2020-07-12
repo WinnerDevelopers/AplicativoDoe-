@@ -23,19 +23,24 @@ ion-toolbar{
     position: absolute;
     width: 100%;
 }
-.iconeogn{
-    width: 30%;
-    height: 30%;
+.iconecampanha{
+    width: 45%;
+    height: 27%;
     margin-left: 35%;
     margin-top: 20%;
     z-index: 99999;
 }
-.iconeogn img{
+.iconecampanha img{
+    width: 125px;
+    height: 125px;
+    background-position: center;
+    background-size: cover;
     border-radius: 50%;
     background-color: white;
     -webkit-box-shadow: 0px 0px 5px 4px rgba(235,226,235,0.5);
     -moz-box-shadow: 0px 0px 5px 4px rgba(235,226,235,0.5);
     box-shadow: 0px 0px 5px 4px rgba(235,226,235,0.5);
+
 }
 .conteudo{
     height: 90%;
@@ -49,14 +54,4 @@ ion-toolbar{
     position: absolute;
     width: 85%;
     left: 5%;
-}
-.slides{
-    width: 90%;
-    height: 80%;
-    margin-left: 5%;
-    margin-top: 10%;
-    border-radius: 10%;
-    display: flex;
-    background-position: center;
-    background-size: cover; 
 }

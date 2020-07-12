@@ -172,4 +172,8 @@ export class HomePage implements OnInit {
     this.router.navigate(['/favoritos/']);
   }
 
+  OpenOng(id){
+    this.router.navigate(['/ong/'+id]);
+  }
+
 }

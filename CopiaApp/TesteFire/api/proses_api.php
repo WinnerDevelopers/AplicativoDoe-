@@ -252,6 +252,90 @@
         }
 
     }
+
+    elseif($postjson['aski'] == "ong_apenas"){
+
+        $query = mysqli_query($mysqli,"select nomeOng, descricaoOng, logradouroOng, bairroOng, numeroOng, cepOng, cnpjOng, fotoOng, tbFoneOng.idFoneOng, tbLoginOng.idLoginOng, numeroFoneOng, emailOng from tbOng inner join tbFoneOng on tbOng.idFoneOng = tbFoneOng.idFoneOng inner join tbLoginOng on tbOng.idLoginOng = tbLoginOng.idLoginOng where idOng = '$postjson[id]'"); 
+        
+        while ($rows = mysqli_fetch_array($query)) {
+
+            $data = array(
+                'nomeOng' =>  $rows['nomeOng'],
+                'descricaoOng' =>  $rows['descricaoOng'],
+                'logradouroOng' => $rows['logradouroOng'],
+                'bairroOng' => $rows['bairroOng'],
+                'numeroOng' => $rows['numeroOng'],
+                'cepOng' => $rows['cepOng'],
+                'cnpjOng' => $rows['cnpjOng'],
+                'fotoOng' => $rows['fotoOng'],
+                'numeroFoneOng' => $rows['numeroFoneOng'],
+                'emailOng' => $rows['emailOng']
+                );
+        }
+
+        if($query){
+            $result = json_encode(array('sucess'=>true, 'result'=>$data));
+        }else{
+            $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
+        }
+    
+        echo $result;
+
+    }
+
+    elseif($postjson['aski'] == "campanha_ong"){
+
+        $query =  mysqli_query($mysqli,"SELECT idCampanha, nomeCampanha, descricaoCampanha, inicioCampanha, fimCampanha, fotoCampanha FROM tbCampanha WHERE idOng = '$postjson[id]'");
+
+        while ($rows = mysqli_fetch_array($query)) {
+
+            $campanhas[] = array(
+                'idCampanha' => $rows['idCampanha'],
+                'nomeCampanha' =>  $rows['nomeCampanha'],
+                'descricaoCampanha' =>  $rows['descricaoCampanha'],
+                'inicioCampanha' => $rows['inicioCampanha'],
+                'fimCampanha' => $rows['fimCampanha'],
+                'fotoCampanha' => $rows['fotoCampanha']
+            );
+        }
+
+        if($query){
+            $result = json_encode(array('sucess'=>true, 'result'=>$campanhas));
+        }else{
+            $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
+        }
+    
+        echo $result;
+
+    }
+
+    elseif($postjson['aski'] == "campanha_dados"){
+
+        $query =  mysqli_query($mysqli,"SELECT idCampanha, nomeCampanha, descricaoCampanha, inicioCampanha, fimCampanha, fotoCampanha, tbOng.idOng, fotoOng FROM tbCampanha INNER JOIN tbOng ON tbCampanha.idOng = tbOng.idOng  WHERE idCampanha = '$postjson[id]'");
+
+        while ($rows = mysqli_fetch_array($query)) {
+
+            $campanha = array(
+                'idCampanha' => $rows['idCampanha'],
+                'nomeCampanha' =>  $rows['nomeCampanha'],
+                'descricaoCampanha' =>  $rows['descricaoCampanha'],
+                'inicioCampanha' => date('d-m-Y',strtotime($rows['inicioCampanha'])),
+                'fimCampanha' => date('d-m-Y',strtotime($rows['fimCampanha'])),
+                'fotoCampanha' => $rows['fotoCampanha'],
+                'fotoOng' => $rows['fotoOng']
+            );
+        }
+
+        if($query){
+            $result = json_encode(array('sucess'=>true, 'result'=>$campanha));
+        }else{
+            $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
+        }
+    
+        echo $result;
+
+
+    }
    
 
 ?>

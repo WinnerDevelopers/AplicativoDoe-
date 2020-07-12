@@ -32,8 +32,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
   },
   {
-    path: 'ong',
+    path: 'ong/:id',
     loadChildren: () => import('./pages/ong/ong.module').then( m => m.OngPageModule)
+  },
+  {
+    path: 'campanha/:id',
+    loadChildren: () => import('./pages/campanha/campanha.module').then( m => m.CampanhaPageModule)
   },
 ];
 
