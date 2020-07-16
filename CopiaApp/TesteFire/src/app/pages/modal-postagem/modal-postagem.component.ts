@@ -7,29 +7,22 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Storage } from '@ionic/storage'
 
 @Component({
-  selector: 'app-deposit-modal',
-  templateUrl: './deposit-modal.component.html',
-  styleUrls: ['./deposit-modal.component.scss'],
+  selector: 'app-modal-postagem',
+  templateUrl: './modal-postagem.component.html',
+  styleUrls: ['./modal-postagem.component.scss'],
 })
-export class DepositModalComponent  {
+export class ModalPostagemComponent {
 
   @Input() id: number;
-  datastorage: any;
-  idCampanha:  string = "";
-  nomeCampanha: string = "";
-  descricaoCampanha :string = "";
-  inicioCampanha: string = "";
-  fimCampanha: string = "";
-  fotoCampanha: string = "";
-  fotoOng :string = "";
+  fotoOng: string = "";
+  descPostagem: string = "";
   nomeOng: string = "";
-  idOng: string = "";
 
   constructor(private modalCtrl: ModalController,private router: Router, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private acssPvrs: AcessProviders, private storage: Storage, public navCtrl: NavController,private camera: Camera,public actionSheetController: ActionSheetController,private actRoute :ActivatedRoute) { }
 
   ionViewDidEnter(){
     if(this.id!=0){
-      this.loadCampanha();
+      this.loadPost();
     }
   }
 
@@ -37,34 +30,23 @@ export class DepositModalComponent  {
     this.modalCtrl.dismiss();
   }
 
-  loadCampanha(){
+  loadPost(){
 
     return new Promise(resolve => {
       let body = {
-        aski: 'campanha_dados',
-        id: this.id
+        aski: 'listar_postagem',
+        idOng: this.id
       }
 
       this.acssPvrs.postData(body,'proses_api.php').subscribe((res:any)=>{
-        this.idCampanha = res.result.idCampanha;
-        this.nomeCampanha = res.result.nomeCampanha;
-        this.descricaoCampanha = res.result.descricaoCampanha;
-        this.inicioCampanha = res.result.inicioCampanha;
-        this.fimCampanha = res.result.inicioCampanha;
-        this.fotoCampanha = res.result.fotoCampanha;
+        this.descPostagem = res.result.descPostagem;
         this.fotoOng = res.result.fotoOng;
         this.nomeOng = res.result.nomeOng;
-        this.idOng = res.result.idOng;
         //console.log(res);
       });
       
     });
 
-  }
-
-  OpenDoacao(a){
-    this.router.navigate(['/doacao/'+a]);
-    this.dismissModal();
   }
 
 }

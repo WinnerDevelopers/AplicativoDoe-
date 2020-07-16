@@ -1,43 +1,38 @@
 <ion-menu side="start" content-id="main-content">
-      <ion-header class="titulo">
-        <ion-toolbar>
-            <ion-item id="topo">
-              <ion-avatar slot="start" height="70">
-              <!-- <img src="http://192.168.0.20/CopiaApp/TesteFire/api/{{image}}"> -->
-                <img src="http://192.168.0.19/CopiaApp/TesteFire/api/{{image}}">
-              </ion-avatar>
-              <ion-label style="margin-left: 5%;">{{email}}</ion-label>
-            </ion-item>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list class="lista">
-          <ion-item>
-            <img id="icone" slot="start" src="../assets/img/sydney-opera-house.png" width="23" height="23">
-            <ion-label>Home</ion-label>
-          </ion-item>
-          <ion-item>
-              <img id="icone" slot="start" src="../assets/img/telegrama.png" width="23" height="23">
-              <ion-label>Ongs</ion-label>
-          </ion-item>
-          <ion-item (click)="OpenFav()">
-              <img id="icone" slot="start" src="../assets/img/favorito.png" width="23" height="23">
-              <ion-label>Favoritos</ion-label>
-          </ion-item>
-          <ion-item (click)="OpenCrud(id)">
-              <img id="icone" slot="start" src="../assets/img/configuracoes.png" width="23" height="23">
-              <ion-label>Configurações</ion-label>
-          </ion-item>
-          <ion-item (click)="Logout()">
-              <img id="icone" slot="start" src="../assets/img/sair.png" width="23" height="23">
-              <ion-label>Sair</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    
+  <ion-header class="titulo">
+    <ion-toolbar>
+        <ion-item id="topo">
+          <ion-avatar slot="start" height="70">
+            <img src="http://192.168.15.7/CopiaApp/TesteFire/api/{{image}}">
+            <!-- <img src="http://192.168.0.19/CopiaApp/TesteFire/api/{{image}}"> -->
+          </ion-avatar>
+          <ion-label style="margin-left: 5%;">{{email}}</ion-label>
+        </ion-item>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list class="lista">
+      <ion-item>
+        <img id="icone" slot="start" src="../assets/img/sydney-opera-house.png" width="23" height="23">
+        <ion-label>Home</ion-label>
+      </ion-item>
+      <ion-item (click)="OpenCampanhas()">
+          <img id="icone" slot="start" src="../assets/img/telegrama.png" width="23" height="23">
+          <ion-label>Campanhas</ion-label>
+      </ion-item>
+      <ion-item (click)="OpenCrud(id)">
+          <img id="icone" slot="start" src="../assets/img/configuracoes.png" width="23" height="23">
+          <ion-label>Configurações</ion-label>
+      </ion-item>
+      <ion-item (click)="Logout()">
+          <img id="icone" slot="start" src="../assets/img/sair.png" width="23" height="23">
+          <ion-label>Sair</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-  <div class="ion-page" id="main-content">
+<div class="ion-page" id="main-content">
 
     <ion-header>
       <ion-toolbar>
@@ -55,20 +50,8 @@
         </ion-refresher>
 
         <ion-slides>
-          <ion-slide>
-              <img src="../assets/img/clothes-donation.png" />
-            </ion-slide>
-            <ion-slide>
-              <img src="../assets/img/donation.png" />
-            </ion-slide>
-            <ion-slide>
-              <img src="../assets/img/location.png" />
-            </ion-slide>
-            <ion-slide>
-              <img src="../assets/img/heart-box.png" />
-            </ion-slide>
-            <ion-slide>
-              <img src="../assets/img/people.png" />
+          <ion-slide *ngFor="let postagem of posts" (click)="OpenModal(postagem.idOng)">
+            <img src="{{postagem.fotoOng}}">
             </ion-slide>
         </ion-slides>
 
@@ -77,8 +60,8 @@
           <img src="{{ong.fotoOng}}" style="width: 100%;height: 100%;object-fit: contain;">
         </div>
         <div class="conteudo-card">
-          <ion-card-title>{{ong.nomeOng}}</ion-card-title>
-          <ion-card-subtitle>{{ong.descricaoOng}}</ion-card-subtitle>
+          <ion-card-title style="color: #293885;">{{ong.nomeOng}}</ion-card-title>
+          <ion-card-subtitle style="color:rgba(22, 21, 21, 0.705)">{{ong.descricaoOng}}</ion-card-subtitle>
         </div>       
       </ion-card>
         
@@ -111,4 +94,3 @@
     </ion-content>
 
   </div>
-

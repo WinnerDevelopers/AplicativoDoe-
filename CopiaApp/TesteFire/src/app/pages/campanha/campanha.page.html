@@ -1,61 +1,42 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <div class="topo">
-      <!-- <ion-title style="float: right;color: #2e4094;margin-right: 5%;"(click)="BackHome()">SALVAR</ion-title> -->
-    <ion-title style="margin-left: 8%;">{{nomeCampanha}}</ion-title>
-    </div>
-  </ion-toolbar>
-</ion-header>
-
-
-<ion-content>
-
-  <!-- <div class="iconeong">
-    <img src="{{fotoOng}}" style="width: 100%;;position: absolute;">
-  </div> -->
-  <div class="fundo">
-    <div class="iconecampanha">
-      <img id="iconeuser" src="{{fotoCampanha}}">
-    </div>
-    <div class="conteudo">
-
-      <div class="dados">
-        <ion-grid>
-            <ion-row>
-                <ion-col>
-                  <div>
-                  <p style="color: #0984e3;font-size: 25px;">{{nomeCampanha}}</p>
-                  </div>
-                </ion-col>
-              </ion-row>
-              <ion-row style="margin-bottom: 20px;">
-                <ion-col>
-                  <div style="text-align: left;font-size: 13px;color: #74b9ff;">
-                  <p>{{descricaoCampanha}}</p>
-                  </div>
-                </ion-col>
-              </ion-row>
-              <ion-row style="margin-bottom: 20px;">
-                <ion-col>
-                  <div style="color: #0984e3;font-size: 17px;">
-                  <p>Data Inicio</p>
-                  </div>
-                  <ion-row>
-                    <p style="text-align: left;color: #74b9ff;font-size: 14px;">{{inicioCampanha}}</p>
-                  </ion-row> 
-                </ion-col>
-                <ion-col style="left: 5%;">
-                    <p style="color: #0984e3;font-size: 17px;">Data Fim</p>
-                    <p style="text-align: left;color: #74b9ff;font-size: 14px;">{{fimCampanha}}</p>
-                </ion-col>
-              </ion-row>
-        </ion-grid>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <div class="topo">
+        <!-- <ion-title style="float: right;color: #2e4094;margin-right: 5%;"(click)="BackHome()">SALVAR</ion-title> -->
+      <ion-title style="margin-left: 8%; color: #293885;">Campanhas</ion-title>
       </div>
-
-      </div>
-  </div>
-
-</ion-content>
+    </ion-toolbar>
+  </ion-header>
+    
+    <div class="ion-page" id="main-content">
+  
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <img src="../assets/img/doe+SimpleLogoTransparenteBlue.png" id="logo">
+        </ion-toolbar>
+      </ion-header>
+  
+      <ion-content>
+        
+          <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+              <ion-refresher-content pullingIcon="arrow-dropdown"></ion-refresher-content>
+          </ion-refresher>
+  
+        <ion-card *ngFor="let campanha of campanhas" class="card-timeline" (click)="OpenModal(campanha.idCampanha)">
+          <div class="topocard" >
+            <img src="{{campanha.fotoCampanha}}" style="width: 100%;height: 100%;object-fit: contain;">
+          </div>
+          <div class="conteudo-card">
+            <ion-card-title style="color: #293885;">{{campanha.nomeCampanha}}</ion-card-title>
+            <ion-card-subtitle style="color:rgba(22, 21, 21, 0.705)">{{campanha.descricaoCampanha}}</ion-card-subtitle>
+          </div>       
+        </ion-card>
+  
+      </ion-content>
+  
+    </div>

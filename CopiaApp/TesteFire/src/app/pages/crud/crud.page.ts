@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController, LoadingController, AlertController, NavController,ActionSheetController} from '@ionic/angular';
 import { AcessProviders } from '../../providers/acess-providers';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.page.html',
@@ -128,7 +129,8 @@ export class CrudPage implements OnInit {
         this.sexo = res.result.sexoUsuario;
         this.dataNasc = res.result.dataNascUsuario;
         this.image = res.result.fotoUsuario;
-        this.foto = "http://192.168.0.19/CopiaApp/TesteFire/api/"+this.image;
+        //this.foto = "http://192.168.0.19/CopiaApp/TesteFire/api/"+this.image;
+        this.foto = "http://192.168.15.7/CopiaApp/TesteFire/api/"+this.image;
       });
 
     });

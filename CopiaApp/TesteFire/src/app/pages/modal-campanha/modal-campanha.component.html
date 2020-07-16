@@ -1,0 +1,51 @@
+<!-- <ion-header>
+    <ion-toolbar>
+      <ion-buttons>
+        <ion-button slot="end" (click)="dismissModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+
+    <div class="fundo">
+        <div class="fotocampanha">
+          <img src="{{fotoCampanha}}">
+        </div>
+        <div class="iconeong" style="margin-bottom: 18px;">
+            <img src="{{fotoOng}}">
+        </div> 
+        <div class="conteudo">
+            <ion-grid class="conteudo2">
+                <ion-row>
+                    <ion-col>
+                      <div>
+                      <p style="color: #293885;font-size: 25px;">{{nomeCampanha}}</p>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row style="margin-bottom: 23px;">
+                    <ion-col>
+                      <div style="font-size: 13px;color:rgba(22, 21, 21, 0.705);">
+                      <p>{{descricaoCampanha}}</p>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row style="margin-bottom: 23px;">
+                    <ion-col>
+                      <p style="color: #293885;font-size: 17px;">Data Inicio</p>
+                      <p style="color:rgba(22, 21, 21, 0.705);font-size: 14px;">{{inicioCampanha}}</p>
+                    </ion-col>
+                    <ion-col>
+                        <p style="color: #293885;font-size: 17px;">Data Fim</p>
+                        <p style="color:rgba(22, 21, 21, 0.705);font-size: 14px;">{{fimCampanha}}</p>
+                    </ion-col>
+                  </ion-row>
+                  <ion-button class="btnDoar" (click)="dismissModal()">
+                    Fechar
+                  </ion-button>
+            </ion-grid>
+        </div>
+    </div>
+  </ion-content>
+  

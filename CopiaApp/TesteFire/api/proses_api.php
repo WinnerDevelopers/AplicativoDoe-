@@ -10,6 +10,18 @@
 
     $postjson = json_decode(file_get_contents("php://input"),true);
 
+    function Mask($mask,$str){
+
+        $str = str_replace(" ","",$str);
+
+        for($i=0;$i<strlen($str);$i++){
+            $mask[strpos($mask,"#")] = $str[$i];
+        }
+
+        return $mask;
+
+    }
+
     if($postjson['aski'] == "proses_register"){
 
         $checkemail = mysqli_fetch_array(mysqli_query($mysqli,"select emailUsuario from tbUsuario where emailUsuario = '$postjson[email]'"));
@@ -193,9 +205,8 @@
     }
 
     elseif($postjson['aski'] == "listar_user"){
-
-        $password = $postjson['password'];
-        $query = mysqli_query($mysqli,"select * from tbUsuario where emailUsuario = '$postjson[email]' and senhaUsuario = '$password'"); 
+        
+        $query = mysqli_query($mysqli,"select * from tbUsuario where idUsuario = '$postjson[id]'"); 
         
         while ($rows = mysqli_fetch_array($query)) {
 
@@ -265,10 +276,10 @@
                 'logradouroOng' => $rows['logradouroOng'],
                 'bairroOng' => $rows['bairroOng'],
                 'numeroOng' => $rows['numeroOng'],
-                'cepOng' => $rows['cepOng'],
+                'cepOng' => Mask("#####-###",$rows['cepOng']),
                 'cnpjOng' => $rows['cnpjOng'],
                 'fotoOng' => $rows['fotoOng'],
-                'numeroFoneOng' => $rows['numeroFoneOng'],
+                'numeroFoneOng' =>  Mask("(##)####-####",$rows['numeroFoneOng']),
                 'emailOng' => $rows['emailOng']
                 );
         }
@@ -311,7 +322,7 @@
 
     elseif($postjson['aski'] == "campanha_dados"){
 
-        $query =  mysqli_query($mysqli,"SELECT idCampanha, nomeCampanha, descricaoCampanha, inicioCampanha, fimCampanha, fotoCampanha, tbOng.idOng, fotoOng FROM tbCampanha INNER JOIN tbOng ON tbCampanha.idOng = tbOng.idOng  WHERE idCampanha = '$postjson[id]'");
+        $query =  mysqli_query($mysqli,"SELECT idCampanha, nomeCampanha, descricaoCampanha, inicioCampanha, fimCampanha, fotoCampanha, fotoOng , tbOng.idOng, nomeOng, descricaoOng, logradouroOng, bairroOng, numeroOng, cepOng, cnpjOng, fotoOng, tbLoginOng.idLoginOng, numeroFoneOng, emailOng FROM tbCampanha INNER JOIN tbOng ON tbCampanha.idOng = tbOng.idOng INNER JOIN tbFoneOng ON tbOng.idFoneOng = tbFoneOng.idFoneOng INNER JOIN tbLoginOng ON tbOng.idLoginOng = tbLoginOng.idLoginOng  WHERE idCampanha = '$postjson[id]'");
 
         while ($rows = mysqli_fetch_array($query)) {
 
@@ -322,7 +333,16 @@
                 'inicioCampanha' => date('d-m-Y',strtotime($rows['inicioCampanha'])),
                 'fimCampanha' => date('d-m-Y',strtotime($rows['fimCampanha'])),
                 'fotoCampanha' => $rows['fotoCampanha'],
-                'fotoOng' => $rows['fotoOng']
+                'nomeOng' =>  $rows['nomeOng'],
+                'descricaoOng' =>  $rows['descricaoOng'],
+                'logradouroOng' => $rows['logradouroOng'],
+                'bairroOng' => $rows['bairroOng'],
+                'numeroOng' => $rows['numeroOng'],
+                'cepOng' => Mask("#####-###",$rows['cepOng']),
+                'cnpjOng' => $rows['cnpjOng'],
+                'fotoOng' => $rows['fotoOng'],
+                'numeroFoneOng' =>  Mask("(##)####-####",$rows['numeroFoneOng']),
+                'emailOng' => $rows['emailOng']
             );
         }
 
@@ -336,6 +356,106 @@
 
 
     }
+
+    elseif($postjson['aski'] == "realizar_doacao"){
+
+        $datenow = date('d-m-Y');
+        $datenowxxx = date('Y-m-d_H_i_s');
+        $diretorio = "images/img_user".$datenowxxx.".jpg";
+        $entry = base64_decode($postjson['fotoDoacao']);
+        $img = imagecreatefromstring($entry);
+        imagejpeg($img, $diretorio);
+        imagedestroy($img);
+            
+        $insert = mysqli_query($mysqli, "insert into tbDoacao set 
+            descricaoDoacao =  '$postjson[descricaoDoacao]',
+            idUsuario =  '$postjson[idUsuario]',
+            dataDoacao = '$datenow',
+            idCampanha = '$postjson[idCampanha]',
+            fotoDoacao = '$diretorio'
+        ");
+
+            if($insert){
+                $result = json_encode(array('sucess'=>true, 'msg'=>'Doacao Realizada com Sucesso'));
+            }else{
+                $result = json_encode(array('sucess'=>false, 'msg'=>$mysqli->error));
+            }
+    
+        echo $result;
+        
+    }
+
+    elseif($postjson['aski'] == "campanhas"){
+
+        $query =  mysqli_query($mysqli,"SELECT idCampanha,nomeCampanha, descricaoCampanha, inicioCampanha, fimCampanha, fotoCampanha FROM tbCampanha");
+
+        while ($rows = mysqli_fetch_array($query)) {
+
+            $campanhas[] = array(
+                'idCampanha' => $rows['idCampanha'],
+                'nomeCampanha' =>  $rows['nomeCampanha'],
+                'descricaoCampanha' =>  $rows['descricaoCampanha'],
+                'inicioCampanha' => $rows['inicioCampanha'],
+                'fimCampanha' => $rows['fimCampanha'],
+                'fotoCampanha' => $rows['fotoCampanha']
+            );
+        }
+
+        if($query){
+            $result = json_encode(array('sucess'=>true, 'result'=>$campanhas));
+        }else{
+            $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
+        }
+    
+        echo $result;
+
+    }
    
+
+    elseif($postjson['aski'] == "listar_postagens"){
+
+        $query =  mysqli_query($mysqli,"SELECT descPostagem, tbOng.idOng, nomeOng, fotoOng FROM tbPostagem INNER JOIN tbOng ON tbPostagem.idOng = tbOng.idOng");
+
+        while ($rows = mysqli_fetch_array($query)) {
+
+            $postagens[] = array(
+                'descPostagem' =>  $rows['descPostagem'],
+                'idOng' =>  $rows['idOng'],
+                'fotoOng' => $rows['fotoOng'],
+                'nomeOng' => $rows['nomeOng']
+            );
+        }
+
+        if($query){
+            $result = json_encode(array('sucess'=>true, 'result'=>$postagens));
+        }else{
+            $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
+        }
+    
+        echo $result;
+
+    }
+
+    elseif($postjson['aski'] == "listar_postagem"){
+
+        $query =  mysqli_query($mysqli,"SELECT descPostagem, fotoOng FROM tbPostagem INNER JOIN tbOng ON tbPostagem.idOng = tbOng.idOng WHERE tbOng.idOng = '$postjson[idOng]'");
+
+        while ($rows = mysqli_fetch_array($query)) {
+
+            $postagem = array(
+                'descPostagem' =>  $rows['descPostagem'],
+                'fotoOng' => $rows['fotoOng']
+            );
+        }
+
+        if($query){
+            $result = json_encode(array('sucess'=>true, 'result'=>$postagem));
+        }else{
+            $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
+        }
+    
+        echo $result;
+
+    }
 
 ?>

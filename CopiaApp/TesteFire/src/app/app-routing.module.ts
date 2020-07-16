@@ -36,8 +36,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/ong/ong.module').then( m => m.OngPageModule)
   },
   {
-    path: 'campanha/:id',
+    path: 'campanha',
     loadChildren: () => import('./pages/campanha/campanha.module').then( m => m.CampanhaPageModule)
+  },
+  {
+    path: 'doacao/:parametro',
+    loadChildren: () => import('./pages/doacao/doacao.module').then( m => m.DoacaoPageModule)
   },
 ];
 

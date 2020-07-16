@@ -7,12 +7,11 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Storage } from '@ionic/storage'
 
 @Component({
-  selector: 'app-deposit-modal',
-  templateUrl: './deposit-modal.component.html',
-  styleUrls: ['./deposit-modal.component.scss'],
+  selector: 'app-modal-campanha',
+  templateUrl: './modal-campanha.component.html',
+  styleUrls: ['./modal-campanha.component.scss'],
 })
-export class DepositModalComponent  {
-
+export class ModalCampanhaComponent{
   @Input() id: number;
   datastorage: any;
   idCampanha:  string = "";
@@ -62,9 +61,5 @@ export class DepositModalComponent  {
 
   }
 
-  OpenDoacao(a){
-    this.router.navigate(['/doacao/'+a]);
-    this.dismissModal();
-  }
 
 }

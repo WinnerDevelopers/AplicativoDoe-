@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastController, LoadingController, AlertController, NavController,ActionSheetController} from '@ionic/angular';
+import { ToastController, LoadingController, AlertController, NavController,ActionSheetController, ModalController} from '@ionic/angular';
 import { AcessProviders } from '../../providers/acess-providers';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
+import { ModalCampanhaComponent } from './../modal-campanha/modal-campanha.component';
+
 
 @Component({
   selector: 'app-campanha',
@@ -20,8 +22,9 @@ export class CampanhaPage implements OnInit {
   inicioCampanha: string = "";
   fimCampanha: string = "";
   fotoCampanha: string = "";
+  campanhas: any = [];
 
-  constructor(private router: Router, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private acssPvrs: AcessProviders, private storage: Storage, public navCtrl: NavController,private camera: Camera,public actionSheetController: ActionSheetController,private actRoute :ActivatedRoute) {}
+  constructor(private router: Router, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private acssPvrs: AcessProviders, private storage: Storage, public navCtrl: NavController,private camera: Camera,public actionSheetController: ActionSheetController,private actRoute :ActivatedRoute, private modalCtrl: ModalController) {}
 
   ngOnInit() {
     this.actRoute.params.subscribe((data: any)=>{
@@ -29,31 +32,60 @@ export class CampanhaPage implements OnInit {
       this.id = data.id;
 
       if(this.id!=0){
-        this.loadCampanha();
+        this.campanhas = [];
+        this.loadCampanhas();
       }
 
     });
   }
 
-  loadCampanha(){
+  async doRefresh(event){
+    const loader = await this.loadingCtrl.create({
+      message: "Por favor Espere....",
+    });
+
+    loader.present();
+    this.ngOnInit();
+    event.target.complete();
+
+    loader.dismiss();
+  }
+
+  loadData(event){
+    setTimeout(() =>{
+      this.loadCampanhas().then(()=>{
+          event.target.complete();
+      });
+    },500);
+  } 
+
+  loadCampanhas(){
 
     return new Promise(resolve => {
       let body = {
-        aski: 'campanha_dados',
-        id: this.id
+        aski: 'campanhas',
       }
 
-      this.acssPvrs.postData(body,'proses_api.php').subscribe((res:any)=>{
-        this.nomeCampanha = res.result.nomeCampanha;
-        this.descricaoCampanha = res.result.descricaoCampanha;
-        this.inicioCampanha = res.result.inicioCampanha;
-        this.fimCampanha = res.result.inicioCampanha;
-        this.fotoCampanha = res.result.fotoCampanha;
-        /* console.log(res); */
+      this.acssPvrs.postData(body,'proses_api.php').subscribe((data:any)=>{
+        for(let datas of data.result){
+          this.campanhas.push(datas);
+        }
+        resolve(true); 
       });
       
     });
 
+  }
+
+  async OpenModal(a){
+    const modal = await this.modalCtrl.create({
+      component: ModalCampanhaComponent,
+      componentProps: {
+        id: a
+      }
+    });
+    
+    await modal.present();
   }
 
 }

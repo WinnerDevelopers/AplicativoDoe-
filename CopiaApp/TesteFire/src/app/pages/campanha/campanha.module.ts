@@ -8,6 +8,9 @@ import { CampanhaPageRoutingModule } from './campanha-routing.module';
 
 import { CampanhaPage } from './campanha.page';
 
+import { ModalCampanhaComponent } from '../modal-campanha/modal-campanha.component';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +18,7 @@ import { CampanhaPage } from './campanha.page';
     IonicModule,
     CampanhaPageRoutingModule
   ],
-  declarations: [CampanhaPage]
+  declarations: [CampanhaPage, ModalCampanhaComponent],
+  entryComponents: [ModalCampanhaComponent]
 })
 export class CampanhaPageModule {}

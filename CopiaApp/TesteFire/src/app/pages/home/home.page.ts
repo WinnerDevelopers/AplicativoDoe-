@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastController, LoadingController, AlertController, NavController} from '@ionic/angular';
+import { ToastController, LoadingController, AlertController, NavController, ModalController} from '@ionic/angular';
 import { AcessProviders } from '../../providers/acess-providers';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
+import { ModalPostagemComponent } from './../modal-postagem/modal-postagem.component';
+
 
 @Component({
   selector: 'app-home',
@@ -16,21 +18,24 @@ export class HomePage implements OnInit {
   nome: string;
   image: string;
   email: string;
+  emailUser: string = "";
   nomeOng : string;
   senha: string;
   ongs : any = [];
   users: any = [];
+  posts: any = [];
   limit : number = 13;
   start : number = 0;
   heart: string = "../assets/img/fav.png";
   foto: string = "../assets/img/fav.png";
   heart2: string = "../assets/img/fav2.png";
   click:boolean;
+  totalongs: number;
 
 
   campanhas : string[] = ["Unicef","ACCD","Teleton","Cedesp"];
 
-  constructor(private router: Router, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private acssPvrs: AcessProviders, private storage: Storage, public navCtrl: NavController) { 
+  constructor(private router: Router, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private acssPvrs: AcessProviders, private storage: Storage, public navCtrl: NavController, private modalCtrl: ModalController) { 
   }
 
   ngOnInit() { 
@@ -60,6 +65,7 @@ export class HomePage implements OnInit {
     /*   this.nome = this.datastorage.nomeUsuario; */
       /* this.image = this.datastorage.fotoUsuario; */
       this.LoadUser();
+      this.LoadPosts();
     });
     this.start = 0;
     this.ongs = [];
@@ -111,8 +117,7 @@ export class HomePage implements OnInit {
     return new Promise(resolve => {
       let body = {
         aski: 'listar_user',
-        email: this.email,
-        password: this.senha,
+        id: this.id
       }
 
       this.acssPvrs.postData(body,'proses_api.php').subscribe((res:any)=>{
@@ -124,6 +129,34 @@ export class HomePage implements OnInit {
 
     });
 
+  }
+
+  async LoadPosts(){
+    return new Promise(resolve => {
+      let body = {
+        aski: 'listar_postagens'
+      }
+
+      this.acssPvrs.postData(body,'proses_api.php').subscribe((data:any)=>{
+        for(let datas of data.result){
+          this.posts.push(datas);
+        }
+        resolve(true);
+      });
+
+    });
+
+  }
+
+  async OpenModal(a){
+    const modal = await this.modalCtrl.create({
+      component: ModalPostagemComponent,
+      componentProps: {
+        id: a
+      }
+    });
+    
+    await modal.present();
   }
 
   /* AddFav(user, ong){
@@ -170,6 +203,10 @@ export class HomePage implements OnInit {
 
   OpenFav(){
     this.router.navigate(['/favoritos/']);
+  }
+
+  OpenCampanhas(){
+    this.router.navigate(['/campanha/']);
   }
 
   OpenOng(id){

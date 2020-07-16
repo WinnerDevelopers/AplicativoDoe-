@@ -6,8 +6,8 @@ import 'rxjs/add/operator/timeout';
 @Injectable()
 export class AcessProviders{
     //Coloca o ip da sua maquina aqui
-    server:string = "http://192.168.0.19/CopiaApp/TesteFire/api/";
-    //server:string = "http://192.168.0.149/CopiaApp/TesteFire/api/";
+    //server:string = "http://192.168.0.19/CopiaApp/TesteFire/api/";
+    server:string = "http://192.168.15.7/CopiaApp/TesteFire/api/";
     constructor(public http: HttpClient){
 
     }

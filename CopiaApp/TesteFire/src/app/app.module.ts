@@ -12,6 +12,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { AcessProviders } from './providers/acess-providers';
 import { Camera } from '@ionic-native/camera/ngx';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,7 @@ import { Camera } from '@ionic-native/camera/ngx';
     IonicModule.forRoot(),
      AppRoutingModule,
      IonicStorageModule.forRoot(),
-     HttpClientModule,
+     HttpClientModule
     ],
   providers: [
     StatusBar,

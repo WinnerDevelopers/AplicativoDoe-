@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div class="topo">
+      <!-- <ion-title style="float: right;color: #2e4094;margin-right: 5%;"(click)="BackHome()">SALVAR</ion-title> -->
+    <ion-title style="margin-left: 8%;">Realize a doação</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="Doar()">
+        <ion-fab-button class="btnConcluir">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+  
+  <div class="fundo">
+      <div class="foto-fundo">
+          <img src="{{fotoCampanha}}" style="width: 100%;height: 100%;object-fit: contain;border-radius: 10px;">
+      </div>
+    <div class="iconeogn">
+      <img id="iconeuser" src="{{fotoOng}}">
+    </div>
+    <div class="conteudo">
+
+      <div class="dados">
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                  <div>
+                  <p style="color: #293885;font-size: 25px;">{{nomeOng}}</p>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-bottom: 20px;">
+                <ion-col >
+                  <div style="text-align: left;font-size: 13px;color: rgba(22, 21, 21, 0.705);">
+                  <p>{{descricaoOng}}</p>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-bottom: 20px;">
+                <ion-col>
+                  <div style="color: #293885;font-size: 17px;">
+                  <p>Endereço</p>
+                  </div>
+                  <ion-row>
+                    <p style="text-align: left;color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{logradouroOng}}</p>
+                  </ion-row> 
+                </ion-col>
+                <ion-col style="left: 5%;">
+                    <p style="color: #293885;font-size: 17px;">Cep</p>
+                    <p style="text-align: left;color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{cepOng}}</p>
+                </ion-col>
+                <ion-col>
+                    <p style="color: #293885;font-size: 17px;">Número</p>
+                    <p style="text-align: left;color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{numeroOng}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p style="color: #293885;font-size: 17px;">Bairro</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                <p style="text-align: left;color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{bairroOng}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-top: 25px;">
+                <ion-col>
+                  <p style="color: #293885;font-size: 17px;">Telefone</p>
+                  <ion-row>
+                      <p style="text-align: left;color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{telefoneOng}}</p>
+                  </ion-row>
+                </ion-col>
+                <ion-col>
+                    <p style="color: #293885;font-size: 17px;">E-mail</p>
+                    <p style="text-align: left;color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{emailOng}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-item-divider></ion-item-divider>
+              <ion-row style="margin-top: 25px;">
+                  <ion-col>
+                    <div>
+                    <p style="color: #293885;font-size: 25px;">{{nomeCampanha}}</p>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row style="margin-bottom: 25px;">
+                  <ion-col>
+                    <div style="font-size: 13px;color: rgba(22, 21, 21, 0.705);">
+                    <p>{{descricaoCampanha}}</p>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row style="margin-bottom: 30px;">
+                  <ion-col>
+                    <p style="color: #293885;font-size: 17px;">Data Inicio</p>
+                    <p style="color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{inicioCampanha}}</p>
+                  </ion-col>
+                  <ion-col>
+                      <p style="color: #293885;font-size: 17px;">Data Fim</p>
+                      <p style="color: rgba(22, 21, 21, 0.705);font-size: 14px;">{{fimCampanha}}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="stacked" style="color: #293885;">Descricao</ion-label>
+                      <ion-textarea [(ngModel)]="descricaoDoacao" style="text-align: left;color: rgba(22, 21, 21, 0.705);"></ion-textarea>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                
+                <ion-button class="btnFoto" (click)="presentActionSheet()">Escolher Foto</ion-button>
+        </ion-grid>
+      </div>
+
+      </div>
+  </div>
+
+</ion-content>
