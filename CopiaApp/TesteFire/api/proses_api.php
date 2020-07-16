@@ -311,7 +311,7 @@
         }
 
         if($query){
-            $result = json_encode(array('sucess'=>true, 'result'=>$campanhas));
+            $result = json_encode(array('sucess'=>true, 'result'=>@$campanhas));
         }else{
             $result = json_encode(array('sucess'=>false, 'result'=>$mysqli->error));
         }
